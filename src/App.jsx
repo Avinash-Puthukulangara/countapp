@@ -1,8 +1,7 @@
-import { Box, Button, Container, Stack, Typography } from '@mui/material';
+import { Box, Button, Container, Stack, ThemeProvider, Typography, createTheme } from '@mui/material';
 import './App.css';
 import styled from 'styled-components';
 import { useState } from 'react';
-import { isDisabled } from '@testing-library/user-event/dist/utils';
 
 
 export default function App() {
@@ -19,6 +18,26 @@ const handleReset = ()=>{
   setCounter(0)
 }
 
+const theme = createTheme();
+theme.typography.h1 = {
+  padding: theme.spacing(-3),
+  [theme.breakpoints.up('xl')]: {
+    fontSize: '80px',
+  },
+  [theme.breakpoints.up('lg')]: {
+    fontSize: '80px',
+  },
+  [theme.breakpoints.up('md')]: {
+    fontSize: '80px',
+  },
+  [theme.breakpoints.up('sm')]: {
+    fontSize: '10px',
+  },
+  [theme.breakpoints.up('xs')]: {
+    margin: '0px',
+    fontSize: '35px',
+  },
+};
 
 return (
     <div className="AppBackground">
@@ -30,7 +49,7 @@ return (
       }}>
         <Box sx={{
           border:"none", 
-          height:"70vh",
+          height:"80vh",
           width:"100%", 
           borderColor:"black",
           backgroundColor:"#d1e8e2",
@@ -41,7 +60,9 @@ return (
           flexDirection:"column",
           boxShadow: "rgba(0, 0, 0, 0.56) 0px 22px 70px 4px"
           }}>
-         <h1>Start Count</h1> 
+         <ThemeProvider theme={theme}>
+           <Typography variant="h1">Start Count</Typography>
+         </ThemeProvider>
         <div className="CountSize">{counter}</div>
         
         <Stack 
@@ -50,8 +71,8 @@ return (
         sx={{
           margin:"10px"
         }}>
-        <Button variant="contained" onClick={handleAdd}>Increment</Button>
-        <Button variant="contained" onClick={handleSub} >Decrement</Button>
+        <Button variant="contained" onClick={handleAdd}>+</Button>
+        <Button variant="contained" onClick={handleSub} disabled={counter == '0'}>-</Button>
         <Button variant="contained" onClick={handleReset}>Reset</Button>
         </Stack>
         </Box>
